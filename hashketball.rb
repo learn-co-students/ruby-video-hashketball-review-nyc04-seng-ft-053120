@@ -1,3 +1,4 @@
+require "pry"
 # Write your code below game_hash
 
 def game_hash
@@ -128,3 +129,78 @@ def game_hash
 end
 
 # Write code here
+
+# Helper function to output an array, within which are hashes of each individual players on each team
+def all_players(game_hash)
+  game_hash[:home][:players] + game_hash[:away][:players]
+end
+
+
+def num_points_scored(player_name)
+  # Returns the points scored for that player
+  all_players(game_hash).each do |player|
+    return player[:points] if player[:player_name] == player_name
+  end
+end
+
+
+def shoe_size(player_name)
+  # Returns the shoe size for that player
+  all_players(game_hash).each do |player|
+    return player[:shoe] if player[:player_name] == player_name
+  end
+end
+
+
+def team_colors(team_name)
+  # Returns an Array of that team's colors
+  game_hash.each do |key, value|
+    return value[:colors] if value[:team_name] == team_name
+  end
+end
+
+
+def team_names
+  # Returns an array of team names
+  # .collect will return what you ask for in an array
+  result = game_hash.collect do |key, value|
+    value[:team_name]
+  end
+end
+
+
+def player_numbers(team_name)
+  # Returns an array of the jersey numbers for that team
+  result = []
+  
+  game_hash.each do |key, value|
+    if value[:team_name] == team_name
+      value[:players].each { |player| result << player[:number] }
+    end
+  end
+  
+  result
+end
+
+
+def player_stats(player_name)
+  # Returns a hash of that player's stats
+  all_players(game_hash).each do |player|
+    return player if player[:player_name] == player_name
+  end
+end
+
+def big_shoe_rebounds
+  # Returns the number of remounds of the player with the biggest shoe size
+  biggest_shoe_size = nil
+  player_number_rebounds = nil
+  
+  all_players(game_hash).each do |player|
+    if biggest_shoe_size == nil || player[:shoe] > biggest_shoe_size
+      biggest_shoe_size = player[:shoe]
+      player_number_rebounds = player[:rebounds]
+    end
+  end
+  
+  player_number_rebounds
+end
