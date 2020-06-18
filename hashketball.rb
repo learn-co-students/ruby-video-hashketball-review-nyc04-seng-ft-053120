@@ -1,4 +1,4 @@
-# Write your code below game_hash
+require "pry"
 
 def game_hash
   {
@@ -127,4 +127,86 @@ def game_hash
   }
 end
 
-# Write code here
+def players
+  game_hash[:home][:players].concat(game_hash[:away][:players])
+end
+
+def num_points_scored(player_name)
+  players.each { |player|
+    if player_name == player[:player_name]
+      return player[:points]
+    end
+  }
+end
+
+def shoe_size(player_name)
+  players.each { |player_hash|
+    if player_hash[:player_name] == player_name
+      return player_hash[:shoe]
+    end
+  }
+end
+
+def team_colors(team_name)
+  if team_name == game_hash[:home][:team_name]
+    game_hash[:home][:colors]
+  else
+    game_hash[:away][:colors]
+  end
+end
+
+def team_names
+  game_hash.map { |location, team_data|
+    team_data[:team_name]
+  }
+end
+
+def player_numbers(team_name)
+  if team_name == game_hash[:home][:team_name]
+    game_hash[:home][:players].map { |player_hash|
+      player_hash[:number]
+    }
+  else 
+    game_hash[:away][:players].map { |player_hash|
+      player_hash[:number]
+    }
+  end
+end
+
+def player_stats(player_name)
+  players.each { |player_hash|
+    if player_hash[:player_name] == player_name
+      return player_hash
+    end
+  }
+end
+
+def big_shoe_rebounds
+  big_shoe = 0
+  players.each { |player_hash|
+    if player_hash[:shoe] > big_shoe
+      big_shoe = player_hash[:shoe]
+    end
+  }  
+  players.each { |player_hash|
+    if player_hash[:shoe] == big_shoe
+      return player_hash[:rebounds]
+    end
+  }
+end
+
+# Bonus Questions:
+
+# If you would like to take on a few more challenges, there are a few more things you can do. There are not tests for this content - these are provide for additional practice working with hash data.
+
+# Define methods to return the answer to the following questions:
+
+# Which player has the most points? Call the method most_points_scored.
+
+# Which team has the most points? Call the method winning_team.
+
+# Which player has the longest name? Call the method player_with_longest_name.
+
+# Super Bonus:
+
+# Write a method that returns true if the player with the longest name had the most steals. Call the method long_name_steals_a_ton?.
