@@ -127,4 +127,104 @@ def game_hash
   }
 end
 
-# Write code here
+
+def num_points_scored(player)
+  game_hash
+  answer=0
+  count=0
+  while count<game_hash.length do
+    game_hash[game_hash.keys[count]][:players].each do |x|
+      if x[:player_name].eql?(player)
+        answer=x[:points]
+      end
+    end
+    count+=1
+  end
+  answer
+end
+
+def shoe_size(player)
+  game_hash
+  answer=0
+  count=0
+  while count<game_hash.length do
+    game_hash[game_hash.keys[count]][:players].each do |x|
+      if x[:player_name].eql?(player)
+        answer=x[:shoe]
+      end
+    end
+    count+=1
+  end
+  answer
+end
+
+def team_colors(team)
+  game_hash
+  answer=[]
+  count=0
+  while count<game_hash.length do
+    if game_hash[game_hash.keys[count]][:team_name]==team
+      answer=game_hash[game_hash.keys[count]][:colors]
+    end
+    count+=1
+  end
+  answer
+end
+
+def team_names
+  game_hash
+  answer=[]
+  count=0
+  while count<game_hash.length do
+    answer<<game_hash[game_hash.keys[count]][:team_name]
+    count+=1
+  end
+  answer
+end
+
+def player_numbers(team)
+  game_hash
+  answer=[]
+  count=0
+  while count<game_hash.length do
+    if game_hash[game_hash.keys[count]][:team_name].eql?(team)
+      game_hash[game_hash.keys[count]][:players].each do |x|
+        answer<<x[:number]
+      end
+    end
+    count+=1
+  end
+  answer
+end
+
+def player_stats(player)
+  game_hash
+  answer=0
+  count=0
+  while count<game_hash.length do
+    game_hash[game_hash.keys[count]][:players].each do |x|
+      if x[:player_name].eql?(player)
+        answer=x
+      end
+    end
+    count+=1
+  end
+  answer
+end
+
+def big_shoe_rebounds
+  game_hash
+  big=0
+  answer=0
+  count=0
+  while count<game_hash.length do
+    game_hash[game_hash.keys[count]][:players].each do |x|
+      if x[:shoe]>big
+        big=x[:shoe]
+        answer=x[:rebounds]
+      end
+    end
+    count+=1
+  end
+  answer
+end
