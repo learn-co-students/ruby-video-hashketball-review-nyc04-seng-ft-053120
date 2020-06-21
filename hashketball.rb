@@ -1,5 +1,4 @@
 # Write your code below game_hash
-
 def game_hash
   {
     home: {
@@ -128,3 +127,140 @@ def game_hash
 end
 
 # Write code here
+
+def num_points_scored(name)
+  game_hash.each do |advantage, team_info|
+    team_info[:players].each do |player|
+      if player[:player_name] == name
+        return player[:points]
+      end
+    end
+  end
+end
+
+def shoe_size(name)
+  game_hash.each do |advantage, team_info|
+    team_info[:players].each do |player|
+      if player[:player_name] == name
+        return player[:shoe]
+      end
+    end
+  end
+end
+
+def team_colors(name)
+  game_hash.each do |advantage, team_info|
+    if team_info[:team_name] == name
+      return team_info[:colors]
+    end
+  end
+end
+
+def team_names
+  team_names_array = []
+  game_hash.each do |advantage, team_info|
+    team_names_array << team_info[:team_name]
+  end
+  team_names_array
+end
+
+def player_numbers(team_name)
+  player_numbers_array = []
+  game_hash.each do |advantage, team_info|
+    if team_name == team_info[:team_name]
+      team_info[:players].each do |player|
+        player_numbers_array << player[:number]
+      end
+    end
+  end
+  player_numbers_array
+end
+
+def player_stats(name)
+  game_hash.each do |advantage, team_info|
+    team_info[:players].each do |player|
+      if player[:player_name] == name
+        return player
+      end
+    end
+  end
+end
+
+def big_shoe_rebounds
+  top_rebounds = 0
+  biggest_shoe = 0
+  game_hash.each do |advantage, team_info|
+    team_info[:players].each do |player|
+      if player[:shoe] > biggest_shoe
+        biggest_shoe = player[:shoe]
+        top_rebounds = player[:rebounds]
+      end
+    end
+  end
+  top_rebounds
+end
+
+# BONUS QUESTIONS
+
+def most_points_scored
+  most_points = 0
+  highest_scoring_player = ""
+  game_hash.each do |advantage, team_info|
+    team_info[:players].each do |player|
+      if most_points < player[:points]
+        most_points = player[:points]
+        highest_scoring_player = player[:player_name]
+      end
+    end
+  end
+  highest_scoring_player
+end
+
+def winning_team
+  team_one = game_hash[:home][:team_name]
+  team_two = game_hash[:away][:team_name]
+  team_one_points = 0
+  team_two_points = 0
+  game_hash.each do |advantage, team_info|
+    team_info[:players].each do |player|
+      if team_info[:team_name] == team_one
+        team_one_points += player[:points]
+      else team_two_points += player[:points]
+      end
+    end
+  end
+  if team_one_points > team_two_points
+    return team_one
+  else return team_two
+  end
+end
+
+def player_with_longest_name
+  longest_name = ""
+  game_hash.each do |advantage, team_info|
+    team_info[:players].each do |player|
+      if player[:player_name].length > longest_name.length
+        longest_name = player[:player_name]
+      end
+    end
+  end
+  longest_name
+end
+
+# SUPER BONUS QUESTION
+def long_name_steals_a_ton?
+  top_steals = 0
+  top_steals_name = ""
+  game_hash.each do |advantage, team_info|
+    team_info[:players].each do |player|
+      if player[:steals] > top_steals
+        top_steals = player[:steals]
+        top_steals_name = player[:player_name]
+      end
+    end
+  end
+  if top_steals_name == player_with_longest_name
+    return true
+  else return false
+  end
+end
