@@ -229,10 +229,7 @@ def winning_team
       end
     end
   end
-  if team_one_points > team_two_points
-    return team_one
-  else return team_two
-  end
+  team_one_points > team_two_points ? team_one : team_two
 end
 
 def player_with_longest_name
@@ -259,8 +256,5 @@ def long_name_steals_a_ton?
       end
     end
   end
-  if top_steals_name == player_with_longest_name
-    return true
-  else return false
-  end
+  top_steals_name == player_with_longest_name ? true : false
 end
