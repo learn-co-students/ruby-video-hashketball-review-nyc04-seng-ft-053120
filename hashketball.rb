@@ -127,12 +127,12 @@ def game_hash
   }
 end
 
-def players
+def all_players
   game_hash[:home][:players].concat(game_hash[:away][:players])
 end
 
 def num_points_scored(player_name)
-  players.each { |player|
+  all_players.each { |player|
     if player_name == player[:player_name]
       return player[:points]
     end
@@ -140,7 +140,7 @@ def num_points_scored(player_name)
 end
 
 def shoe_size(player_name)
-  players.each { |player_hash|
+  all_players.each { |player_hash|
     if player_hash[:player_name] == player_name
       return player_hash[:shoe]
     end
@@ -173,8 +173,10 @@ def player_numbers(team_name)
   end
 end
 
+#flat_map
+
 def player_stats(player_name)
-  players.each { |player_hash|
+  all_players.each { |player_hash|
     if player_hash[:player_name] == player_name
       return player_hash
     end
@@ -183,30 +185,72 @@ end
 
 def big_shoe_rebounds
   big_shoe = 0
-  players.each { |player_hash|
+  rebounds = 0
+  all_players.each { |player_hash|
     if player_hash[:shoe] > big_shoe
       big_shoe = player_hash[:shoe]
+      rebounds = player_hash[:rebounds]
     end
   }  
-  players.each { |player_hash|
-    if player_hash[:shoe] == big_shoe
-      return player_hash[:rebounds]
-    end
-  }
+  rebounds
 end
 
-# Bonus Questions:
+def most_points_scored
+  points = 0
+  player = ""
+  all_players.each { |player_hash|
+    if player_hash[:points] > points
+      points = player_hash[:points]
+      player = player_hash[:player_name]
+    end
+  }
+  player
+end
 
-# If you would like to take on a few more challenges, there are a few more things you can do. There are not tests for this content - these are provide for additional practice working with hash data.
+def winning_team
+  home_points = 0
+  away_points = 0
 
-# Define methods to return the answer to the following questions:
+  game_hash.each { |home_or_away, data|
+    i = 0
+    if home_or_away == :home
+      until i == game_hash[:home][:players].length
+        home_points += game_hash[:home][:players][i][:points]
+        i += 1
+      end
+    elsif home_or_away == :away
+      until i == game_hash[:away][:players].length
+        away_points += game_hash[:away][:players][i][:points]
+        i += 1
+      end
+    end
+  }
+  
+  home_points > away_points ? game_hash[:home][:team_name] : game_hash[:away][:team_name]
+end
 
-# Which player has the most points? Call the method most_points_scored.
+def player_with_longest_name
+  name = ""
 
-# Which team has the most points? Call the method winning_team.
+  all_players.each { |player_hash|
+    if player_hash[:player_name].length > name.length
+      name = player_hash[:player_name]
+    end
+  }
+  name
+end
 
-# Which player has the longest name? Call the method player_with_longest_name.
+def long_name_steals_a_ton?
+  player_with_most_steals = ""
+  steals = 0
 
-# Super Bonus:
+  all_players.each { |player_hash|
+    if player_hash[:steals] > steals
+      steals = player_hash[:steals]
+      player_with_most_steals = player_hash[:player_name]
+    end
+  }
+  player_with_longest_name == player_with_most_steals
+end
 
-# Write a method that returns true if the player with the longest name had the most steals. Call the method long_name_steals_a_ton?.
+team_colors("Brooklyn Nets")
