@@ -127,4 +127,83 @@ def game_hash
   }
 end
 
-# Write code here
+#knows the number of points scored by each player
+def num_points_scored(players_name)
+  game_hash.each do |team, team_details|
+    team_details[:players].each do |attribute|
+      if attribute[:player_name] == players_name 
+        return attribute[:points]
+      end
+    end
+  end
+end
+
+#returns the shoe size for that player.
+def shoe_size(players_name)
+  game_hash.each do |team, team_details|
+    team_details[:players].each do |attribute|
+      if attribute[:player_name] == players_name
+        return attribute[:shoe]
+      end 
+    end 
+  end 
+end
+
+#returns an `Array` of that team's colors.
+def team_colors(teams_name)
+  game_hash.each do |team, team_details|
+    if team_details[:team_name] == teams_name 
+    return team_details[:colors]
+    end 
+  end 
+end 
+
+#returns an `Array` of the team names.
+def team_names 
+  team_names_array = []
+  game_hash.each do |team, team_details|
+    team_names_array << team_details[:team_name]
+    team_names_array
+  end 
+  team_names_array
+end 
+
+#returns an `Array` of the jersey numbers for that team.
+def player_numbers(teams_name)
+  jersey_numbers = []
+  game_hash.each do |team, team_details|
+    if team_details[:team_name] == teams_name 
+      team_details[:players].each do |attribute|
+        jersey_numbers << attribute[:number]
+        jersey_numbers
+      end
+      return jersey_numbers
+    end 
+  end
+end 
+
+#returns a hash of that player's stats.
+def player_stats(players_name)
+  game_hash.each do |team, team_details|
+    team_details[:players].each do |attribute|
+      if attribute[:player_name] == players_name
+        return attribute 
+      end 
+    end 
+  end 
+end 
+
+#return biggest shoe rebounds
+def big_shoe_rebounds
+  largest_shoe = 0
+  rebounds = 0
+  game_hash.each do |team, team_details|
+    team_details[:players].each do |attribute|
+      if attribute[:shoe] > largest_shoe
+        largest_shoe = attribute[:shoe]
+        rebounds = attribute[:rebounds]
+      end 
+    end 
+    return rebounds 
+  end 
+end 
