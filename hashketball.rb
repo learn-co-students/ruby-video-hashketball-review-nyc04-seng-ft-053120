@@ -165,30 +165,42 @@ end
 return result
 end 
 
-def player_numbers(team)
-  numbers = []
+# def player_numbers(team)
+#   numbers = []
+#   game_hash.each do |home_away, team_color_player|
+#     if game_hash[:home][:team_name] == team
+#       #  game_hash[:home][:players][:number].values
+#       numbers << game_hash[:home][:players][0][:number]
+#       numbers << game_hash[:home][:players][1][:number]
+#       numbers << game_hash[:home][:players][2][:number]
+#       numbers << game_hash[:home][:players][3][:number]
+#       numbers << game_hash[:home][:players][4][:number]
+#       binding.pry
+#       return numbers
+#      end
+#      if game_hash[:away][:team_name] == team
+#        #  game_hash[:home][:players][:number].values
+#        numbers << game_hash[:away][:players][0][:number]
+#        numbers << game_hash[:away][:players][1][:number]
+#        numbers << game_hash[:away][:players][2][:number]
+#        numbers << game_hash[:away][:players][3][:number]
+#        numbers << game_hash[:away][:players][4][:number]
+#        return numbers
+#        # change index of num to while loop increment until reaching length
+#      end
+#    end
+# end
+
+def player_numbers(team_name)
+  result =[]
   game_hash.each do |home_away, team_color_player|
-    if game_hash[:home][:team_name] == team
-      #  game_hash[:home][:players][:number].values
-      numbers << game_hash[:home][:players][0][:number]
-      numbers << game_hash[:home][:players][1][:number]
-      numbers << game_hash[:home][:players][2][:number]
-      numbers << game_hash[:home][:players][3][:number]
-      numbers << game_hash[:home][:players][4][:number]
-      # binding.pry
-      return numbers
-     end
-     if game_hash[:away][:team_name] == team
-       #  game_hash[:home][:players][:number].values
-       numbers << game_hash[:away][:players][0][:number]
-       numbers << game_hash[:away][:players][1][:number]
-       numbers << game_hash[:away][:players][2][:number]
-       numbers << game_hash[:away][:players][3][:number]
-       numbers << game_hash[:away][:players][4][:number]
-       return numbers
-       # change index of num to while loop increment until reaching length
-     end
-   end
+    if team_color_player[:team_name] == team_name
+      team_color_player[:players].each do |player|
+        result << player[:number]
+      end
+    end
+  end
+  return result
 end
 
 def player_stats(name)
