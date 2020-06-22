@@ -1,3 +1,4 @@
+require 'pry'
 # Write your code below game_hash
 
 def game_hash
@@ -128,3 +129,92 @@ def game_hash
 end
 
 # Write code here
+def num_points_scored(name)
+game_hash.each do |home_away, team_color_player|
+  team_color_player[:players].each do |player|
+    if player[:player_name] == name 
+      return player[:points]
+    end 
+  end
+end
+end
+
+def shoe_size(basketball_player)
+  game_hash.each do |home_away, team_color_player|
+    team_color_player[:players].each do |player|
+      if player[:player_name] == basketball_player
+        return player[:shoe]
+      end
+    end
+  end
+end
+
+def team_colors(team)
+  game_hash.each do |home_away, team_color_player|
+    if team_color_player[:team_name] == team
+      return team_color_player[:colors]
+    end 
+  end
+end
+
+def team_names
+  result = []
+game_hash.each do | home_away, team_color_player|
+   result << team_color_player[:team_name]
+end 
+return result
+end 
+
+def player_numbers(team)
+  numbers = []
+  game_hash.each do |home_away, team_color_player|
+    if game_hash[:home][:team_name] == team
+      #  game_hash[:home][:players][:number].values
+      numbers << game_hash[:home][:players][0][:number]
+      numbers << game_hash[:home][:players][1][:number]
+      numbers << game_hash[:home][:players][2][:number]
+      numbers << game_hash[:home][:players][3][:number]
+      numbers << game_hash[:home][:players][4][:number]
+      # binding.pry
+      return numbers
+     end
+     if game_hash[:away][:team_name] == team
+       #  game_hash[:home][:players][:number].values
+       numbers << game_hash[:away][:players][0][:number]
+       numbers << game_hash[:away][:players][1][:number]
+       numbers << game_hash[:away][:players][2][:number]
+       numbers << game_hash[:away][:players][3][:number]
+       numbers << game_hash[:away][:players][4][:number]
+       return numbers
+       # change index of num to while loop increment until reaching length
+     end
+   end
+end
+
+def player_stats(name)
+  #return hash of player stats
+  game_hash.each do |home_away, team_color_player|
+    team_color_player[:players].each do |player|
+      if player[:player_name] == name
+        # binding.pry
+        return player
+      end
+    end
+  end
+end
+ 
+def big_shoe_rebounds
+  # find player with biggest shoe size 
+  result = 0
+  player_rebound = nil
+  game_hash.each do |home_away, team_color_player|
+    team_color_player[:players].each do |player|
+      if player[:shoe] > result 
+        result = player[:shoe]
+        player_rebound = player[:rebounds]
+      end
+      # binding.pry
+    end
+  end 
+  return player_rebound
+end
