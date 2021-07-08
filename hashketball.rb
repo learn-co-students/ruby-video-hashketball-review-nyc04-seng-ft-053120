@@ -1,4 +1,4 @@
-# Write your code below game_hash
+require "pry"
 
 def game_hash
   {
@@ -127,4 +127,130 @@ def game_hash
   }
 end
 
-# Write code here
+def all_players
+  game_hash[:home][:players].concat(game_hash[:away][:players])
+end
+
+def num_points_scored(player_name)
+  all_players.each { |player|
+    if player_name == player[:player_name]
+      return player[:points]
+    end
+  }
+end
+
+def shoe_size(player_name)
+  all_players.each { |player_hash|
+    if player_hash[:player_name] == player_name
+      return player_hash[:shoe]
+    end
+  }
+end
+
+def team_colors(team_name)
+  if team_name == game_hash[:home][:team_name]
+    game_hash[:home][:colors]
+  else
+    game_hash[:away][:colors]
+  end
+end
+
+def team_names
+  game_hash.map { |location, team_data|
+    team_data[:team_name]
+  }
+end
+
+def player_numbers(team_name)
+  if team_name == game_hash[:home][:team_name]
+    game_hash[:home][:players].map { |player_hash|
+      player_hash[:number]
+    }
+  else 
+    game_hash[:away][:players].map { |player_hash|
+      player_hash[:number]
+    }
+  end
+end
+
+#flat_map
+
+def player_stats(player_name)
+  all_players.each { |player_hash|
+    if player_hash[:player_name] == player_name
+      return player_hash
+    end
+  }
+end
+
+def big_shoe_rebounds
+  big_shoe = 0
+  rebounds = 0
+  all_players.each { |player_hash|
+    if player_hash[:shoe] > big_shoe
+      big_shoe = player_hash[:shoe]
+      rebounds = player_hash[:rebounds]
+    end
+  }  
+  rebounds
+end
+
+def most_points_scored
+  points = 0
+  player = ""
+  all_players.each { |player_hash|
+    if player_hash[:points] > points
+      points = player_hash[:points]
+      player = player_hash[:player_name]
+    end
+  }
+  player
+end
+
+def winning_team
+  home_points = 0
+  away_points = 0
+
+  game_hash.each { |home_or_away, data|
+    i = 0
+    if home_or_away == :home
+      until i == game_hash[:home][:players].length
+        home_points += game_hash[:home][:players][i][:points]
+        i += 1
+      end
+    elsif home_or_away == :away
+      until i == game_hash[:away][:players].length
+        away_points += game_hash[:away][:players][i][:points]
+        i += 1
+      end
+    end
+  }
+  
+  home_points > away_points ? game_hash[:home][:team_name] : game_hash[:away][:team_name]
+end
+
+def player_with_longest_name
+  name = ""
+
+  all_players.each { |player_hash|
+    if player_hash[:player_name].length > name.length
+      name = player_hash[:player_name]
+    end
+  }
+  name
+end
+
+def long_name_steals_a_ton?
+  player_with_most_steals = ""
+  steals = 0
+
+  all_players.each { |player_hash|
+    if player_hash[:steals] > steals
+      steals = player_hash[:steals]
+      player_with_most_steals = player_hash[:player_name]
+    end
+  }
+  player_with_longest_name == player_with_most_steals
+end
+
+team_colors("Brooklyn Nets")
